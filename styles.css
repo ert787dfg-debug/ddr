@@ -69,6 +69,10 @@ body {
   margin-bottom: 0.5rem;
   align-items: center;
 }
+.modeLabel {
+  font-weight: 600;
+  color: var(--accent);
+}
 #questionText {
   margin: 0.75rem 0 1rem;
   font-size: 1.25rem;
@@ -101,6 +105,10 @@ body {
 .options button.wrong {
   border-color: var(--wrong);
   background: color-mix(in srgb, var(--wrong) 14%, transparent);
+}
+.options button.marked {
+  outline: 2px dashed var(--accent);
+  outline-offset: 4px;
 }
 .feedback {
   margin-top: 0.75rem;
