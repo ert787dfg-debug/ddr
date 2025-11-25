@@ -84,6 +84,7 @@ function renderReviewQuestion() {
   if (!q) {
     state.reviewQueue.splice(state.reviewIdx, 1);
     if (state.reviewQueue.length === 0) { exitReviewMode(); return; }
+    if (state.reviewIdx >= state.reviewQueue.length) state.reviewIdx = 0;
     renderReviewQuestion();
     return;
   }
@@ -171,8 +172,8 @@ function handleAnswer(i) {
     b.classList.toggle('wrong', idx !== correctIdx && idx === i);
   });
   const isCorrect = i === correctIdx;
+  q.meta = q.meta || {};
   if (!isCorrect) {
-    q.meta = q.meta || {};
     q.meta.markedWrong = true;
     q.meta.reviewAttempts = (q.meta.reviewAttempts || 0) + 1;
     markWrongById(q.id);
@@ -187,8 +188,12 @@ function handleAnswer(i) {
   els.feedback.textContent = isCorrect ? (fb.correct || (state.lang === 'en' ? 'Correct.' : 'صحيح.')) : (fb.wrong || (state.lang === 'en' ? 'Wrong.' : 'خطأ.'));
   setTimeout(() => {
     state.idx++;
+    if (state.idx >= state.questions.length) {
+      renderQuestion();
+      return;
+    }
     renderQuestion();
-  }, 900);
+  }, 700);
 }
 function handleReviewAnswer(i) {
   const qid = state.reviewQueue[state.reviewIdx];
@@ -196,6 +201,7 @@ function handleReviewAnswer(i) {
   if (!q) {
     state.reviewQueue.splice(state.reviewIdx, 1);
     if (state.reviewQueue.length === 0) { exitReviewMode(); return; }
+    if (state.reviewIdx >= state.reviewQueue.length) state.reviewIdx = 0;
     renderReviewQuestion();
     return;
   }
@@ -218,10 +224,13 @@ function handleReviewAnswer(i) {
     els.feedback.textContent = fb.correct || (state.lang === 'en' ? 'Correct.' : 'صحيح.');
     setTimeout(() => {
       state.reviewQueue.splice(state.reviewIdx, 1);
-      if (state.reviewQueue.length === 0) { exitReviewMode(); return; }
+      if (state.reviewQueue.length === 0) {
+        exitReviewMode();
+        return;
+      }
       if (state.reviewIdx >= state.reviewQueue.length) state.reviewIdx = 0;
       renderReviewQuestion();
-    }, 900);
+    }, 700);
   } else {
     q.meta.markedWrong = true;
     markWrongById(q.id);
@@ -230,7 +239,7 @@ function handleReviewAnswer(i) {
     setTimeout(() => {
       state.reviewIdx = (state.reviewIdx + 1) % state.reviewQueue.length;
       renderReviewQuestion();
-    }, 900);
+    }, 700);
   }
 }
 function startQuiz() {
