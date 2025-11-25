@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" data-theme="sky-day">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CT Quiz</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="left">
+      <button id="startBtn">Start</button>
+      <button id="retryBtn" hidden>Retry</button>
+    </div>
+    <div class="right">
+      <button id="langToggle">AR</button>
+      <button id="themeToggle">Sky ☀</button>
+    </div>
+  </header>
+
+  <main id="quiz" class="container">
+    <div id="status">
+      <span id="progress">0 / 0</span>
+      <span id="score">Score: 0</span>
+    </div>
+
+    <figure id="imageWrap" hidden>
+      <img id="qImage" alt="">
+      <figcaption id="imgCaption"></figcaption>
+    </figure>
+
+    <h2 id="questionText"></h2>
+    <ul id="options" class="options"></ul>
+
+    <div id="feedback" class="feedback" hidden></div>
+  </main>
+
+  <footer class="bar small">CT Quiz • v1.0</footer>
+  <script src="script.js"></script>
+</body>
+</html>
